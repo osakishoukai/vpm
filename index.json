@@ -296,6 +296,28 @@
           "zipSHA256": "949cf9b2db00a45d9ebad80a5b9aa2455ed0269ebfe581afb9c1ee3da7a78dcf"
         }
       }
+    },
+    "com.osakishokai.vpm.lightmapprefab": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.lightmapprefab",
+          "displayName": "Osaki LightmapPrefab",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "ベイク済みの prefab(ライトマップ・ライトプローブ)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6",
+            "com.osakishokai.vpm.build": "^1.0.0"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/lightmapprefab-1.0.0/com.osakishokai.vpm.lightmapprefab-1.0.0.zip",
+          "zipSHA256": "9c07a32f32542751a7c12433638ade26f6fe0a0ec5ebd777cd1da094d14ac869"
+        }
+      }
     }
   }
 }
