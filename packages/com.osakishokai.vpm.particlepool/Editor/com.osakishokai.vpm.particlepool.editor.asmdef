@@ -1,0 +1,28 @@
+{
+    "name": "com.osakishokai.vpm.particlepool.editor",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRC.Udon.Editor",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRC.SDK3.Editor",
+        "VRC.SDKBase.Editor",
+        "VRCSDKBase",
+        "com.osakishokai.vpm.build",
+        "com.osakishokai.vpm.particlepool"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
