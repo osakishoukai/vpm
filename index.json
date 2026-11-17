@@ -102,6 +102,27 @@
           "zipSHA256": "c6c82a36b8b4fb78c47c2e73d82dc5d0beee9c54c4806cc0ccc0f3599fe3305d"
         }
       }
+    },
+    "com.osakishokai.vpm.build": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.build",
+          "displayName": "Osaki Build",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "ビルド時の場面の処理(エディタ拡張)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/build-1.0.0/com.osakishokai.vpm.build-1.0.0.zip",
+          "zipSHA256": "419211011593c1d3e5914bc2eed8ed9285511f32ad6b4f6c6f907a09380bc1db"
+        }
+      }
     }
   }
 }
