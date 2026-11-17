@@ -165,6 +165,28 @@
           "zipSHA256": "613ee8c020c21d3956818bc03ae2f802a89bf86c8155e950571da8c55384f131"
         }
       }
+    },
+    "com.osakishokai.vpm.audiopool": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.audiopool",
+          "displayName": "Osaki AudioPool",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "効果音のプール(U#)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6",
+            "com.osakishokai.vpm.build": "^1.0.0"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/audiopool-1.0.0/com.osakishokai.vpm.audiopool-1.0.0.zip",
+          "zipSHA256": "2e2b1fdbd1f7bff6b13f60ae6fd2c5c89ab71d6256eb05593e912d8beb9b681d"
+        }
+      }
     }
   }
 }
