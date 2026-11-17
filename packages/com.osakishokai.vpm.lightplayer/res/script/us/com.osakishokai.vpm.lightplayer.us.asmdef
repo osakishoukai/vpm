@@ -1,0 +1,22 @@
+{
+    "name": "com.osakishokai.vpm.lightplayer.us",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRCSDKBase",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
