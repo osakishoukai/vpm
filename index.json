@@ -56,6 +56,31 @@
           "zipSHA256": "e3cce492800d973b6961884b2ea24df34e2f6f724fb6219ff400fe2995987c93"
         }
       }
+    },
+    "com.osakishokai.vpm.dimmer": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.dimmer",
+          "displayName": "Dimmer",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "明るさの調整(U#・シェーダー)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "legacyFolders": {
+            "Assets/Osaki/Dimmer/res/shader": "221640ee13425434dbecaaebc1c89830",
+            "Assets/Osaki/Dimmer/res/script/us": "0ce9832c53ae49339406ec548cd1f521"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/dimmer-1.0.0/com.osakishokai.vpm.dimmer-1.0.0.zip",
+          "zipSHA256": "395a6ed1c5ac9ee2ea0c596ad800fd31bf32a93a29218abd3ad160bbd8aece52"
+        }
+      }
     }
   }
 }
