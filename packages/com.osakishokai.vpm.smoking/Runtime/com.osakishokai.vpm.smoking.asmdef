@@ -1,0 +1,22 @@
+{
+    "name": "com.osakishokai.vpm.smoking",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRCSDKBase",
+        "com.osakishokai.vpm.particlepool",
+        "com.osakishokai.vpm.audiopool"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
