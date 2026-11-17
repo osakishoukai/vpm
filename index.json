@@ -81,6 +81,27 @@
           "zipSHA256": "395a6ed1c5ac9ee2ea0c596ad800fd31bf32a93a29218abd3ad160bbd8aece52"
         }
       }
+    },
+    "com.osakishokai.vpm.hellopen": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.hellopen",
+          "displayName": "HelloPen",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "ペン(U#・シェーダー)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/hellopen-1.0.0/com.osakishokai.vpm.hellopen-1.0.0.zip",
+          "zipSHA256": "c6c82a36b8b4fb78c47c2e73d82dc5d0beee9c54c4806cc0ccc0f3599fe3305d"
+        }
+      }
     }
   }
 }
