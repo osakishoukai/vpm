@@ -1,0 +1,17 @@
+{
+  "name": "com.osakishokai.vpm.worldsettings",
+  "displayName": "Osaki WorldSettings",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "空・環境光・ブルーム",
+  "license": "MIT",
+  "author": {
+    "name": "Osaki Shoukai",
+    "url": "https://osakishoukai.github.io/"
+  },
+  "vpmDependencies": {
+    "com.vrchat.worlds": ">=3.10.6",
+    "com.osakishokai.vpm.build": "^1.0.0"
+  },
+  "url": "https://github.com/osakishoukai/vpm/releases/download/worldsettings-1.0.0/com.osakishokai.vpm.worldsettings-1.0.0.zip"
+}

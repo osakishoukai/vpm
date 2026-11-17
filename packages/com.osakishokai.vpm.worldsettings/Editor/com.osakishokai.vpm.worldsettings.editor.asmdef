@@ -1,0 +1,21 @@
+{
+    "name": "com.osakishokai.vpm.worldsettings.editor",
+    "rootNamespace": "",
+    "references": [
+        "com.osakishokai.vpm.build",
+        "com.osakishokai.vpm.worldsettings",
+        "Unity.Postprocessing.Runtime",
+        "VRC.SDKBase"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
