@@ -1,0 +1,21 @@
+{
+    "name": "com.osakishokai.vpm.bgmbox",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRCSDKBase",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,23 @@
+{
+    "name": "com.osakishokai.vpm.bgmbox.editor",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRCSDKBase",
+        "com.osakishokai.vpm.bgmbox"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
