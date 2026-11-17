@@ -1,0 +1,24 @@
+{
+    "name": "com.osakishokai.vpm.lightmirror.us.editor",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRCSDKBase",
+        "VRC.SDKBase.Editor",
+        "com.osakishokai.vpm.lightmirror.us"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

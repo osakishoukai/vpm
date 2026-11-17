@@ -1,0 +1,20 @@
+﻿{
+    "name": "com.osakishokai.vpm.lightmirror.us",
+    "rootNamespace": "",
+    "references": [
+        "UdonSharp.Runtime",
+        "VRC.SDK3.Components",
+        "VRC.Udon",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "VRCSDKBase"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

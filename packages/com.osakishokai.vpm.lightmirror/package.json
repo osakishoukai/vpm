@@ -1,0 +1,21 @@
+{
+  "name": "com.osakishokai.vpm.lightmirror",
+  "displayName": "LightMirror",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "軽い鏡(U#・シェーダー)",
+  "license": "MIT",
+  "author": {
+    "name": "Osaki Shoukai",
+    "url": "https://osakishoukai.github.io/"
+  },
+  "vpmDependencies": {
+    "com.vrchat.worlds": ">=3.10.6"
+  },
+  "legacyFolders": {
+    "Assets/Osaki/LightMirror/res/shader": "7ae69cce3211f9046b240c05771bd22c",
+    "Assets/Osaki/LightMirror/res/script/us": "638a9bfc2c894b0dbe9c521e0d73aa1b",
+    "Assets/Osaki/LightMirror/res/script/editor": "e0bd54b42631db5489195566b443c41f"
+  },
+  "url": "https://github.com/osakishoukai/vpm/releases/download/lightmirror-1.0.0/com.osakishokai.vpm.lightmirror-1.0.0.zip"
+}
