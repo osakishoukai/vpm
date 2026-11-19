@@ -2,6 +2,7 @@
 //   1 パス目: 向こうの色に色ガラスの色を掛ける(うす緑など。_Color.a = 0 なら何もしない)
 //   2 パス目: 映り込み(正面は弱く、斜めほど強い)・ハイライト・MatCap・すりの白い膜を重ねる
 // 板は表と裏を別の面で作る(Cull Back)。面ごとに反射プローブを選べる(外向きの面は外、内向きの面は部屋)。
+// _Mask(1.1.0): 白=硝子・黒か透明=抜け(LightMirror のマスクと同じ読み方)。既定の白なら全面が硝子。
 Shader "Osaki/VPM/Glass"
 {
     Properties
@@ -18,6 +19,7 @@ Shader "Osaki/VPM/Glass"
         _Frost ("Frost (milky veil)", Range(0,1)) = 0
         _FrostSmoothness ("Frost Smoothness", Range(0,1)) = 0.45
         _FrostMask ("Frost Mask (R)", 2D) = "white" {}
+        [NoScaleOffset] _Mask ("Mask (white = glass)", 2D) = "white" {}
         [Enum(Back,2,Off,0)] _Cull ("Cull", Float) = 2
     }
 
@@ -29,7 +31,7 @@ Shader "Osaki/VPM/Glass"
         #include "UnityCG.cginc"
         #include "Lighting.cginc"
 
-        sampler2D _BumpMap, _MatCap, _FrostMask;
+        sampler2D _BumpMap, _MatCap, _FrostMask, _Mask;
         float4 _BumpMap_ST;
         half4 _Color;
         half _BumpScale, _Smoothness, _F0, _ReflectionStrength, _SpecularStrength, _MatCapStrength, _Frost, _FrostSmoothness;
@@ -41,6 +43,12 @@ Shader "Osaki/VPM/Glass"
             float2 uv : TEXCOORD0;
             UNITY_VERTEX_INPUT_INSTANCE_ID
         };
+
+        inline void GlassMaskClip(float2 uv)
+        {
+            half4 m = tex2D(_Mask, uv);
+            clip(min(m.a, max(m.r, max(m.g, m.b))) - 0.5);
+        }
         ENDCG
 
         Pass
@@ -58,6 +66,7 @@ Shader "Osaki/VPM/Glass"
 
             struct v2f {
                 float4 pos : SV_POSITION;
+                float2 maskUV : TEXCOORD0;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -67,10 +76,12 @@ Shader "Osaki/VPM/Glass"
                 UNITY_INITIALIZE_OUTPUT(v2f, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 o.pos = UnityObjectToClipPos(v.vertex);
+                o.maskUV = v.uv;
                 return o;
             }
 
             half4 frag(v2f i) : SV_Target {
+                GlassMaskClip(i.maskUV);
                 return half4(lerp(half3(1,1,1), _Color.rgb, _Color.a), 1);
             }
             ENDCG
@@ -98,6 +109,7 @@ Shader "Osaki/VPM/Glass"
                 half3 worldTangent : TEXCOORD2;
                 half3 worldBitangent : TEXCOORD3;
                 float2 uv : TEXCOORD4;
+                float2 maskUV : TEXCOORD6;
                 UNITY_FOG_COORDS(5)
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -115,12 +127,14 @@ Shader "Osaki/VPM/Glass"
                 o.worldTangent = t;
                 o.worldBitangent = cross(n, t) * v.tangent.w * unity_WorldTransformParams.w;
                 o.uv = TRANSFORM_TEX(v.uv, _BumpMap);
+                o.maskUV = v.uv;
                 UNITY_TRANSFER_FOG(o, o.pos);
                 return o;
             }
 
             half4 frag(v2f i, fixed facing : VFACE) : SV_Target {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+                GlassMaskClip(i.maskUV);
 
                 half3 nts = UnpackNormal(tex2D(_BumpMap, i.uv));
                 nts.xy *= _BumpScale;

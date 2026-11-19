@@ -163,6 +163,23 @@
           },
           "url": "https://github.com/osakishoukai/vpm/releases/download/glass-1.0.0/com.osakishokai.vpm.glass-1.0.0.zip",
           "zipSHA256": "613ee8c020c21d3956818bc03ae2f802a89bf86c8155e950571da8c55384f131"
+        },
+        "1.1.0": {
+          "name": "com.osakishokai.vpm.glass",
+          "displayName": "Osaki Glass",
+          "version": "1.1.0",
+          "unity": "2022.3",
+          "description": "ガラスのシェーダー",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/glass-1.1.0/com.osakishokai.vpm.glass-1.1.0.zip",
+          "zipSHA256": "18b5ed36ec08f49214f5292017a7c7fdb3620a19adefd1e95a5859ea6a38b72e"
         }
       }
     },
