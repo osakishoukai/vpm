@@ -14,8 +14,10 @@ namespace com.osakishokai.vpm.lightmirror.us
         [SerializeField] private int mode = ModeFull;
         [Tooltip("この距離(m)より離れると、鏡をやめてプローブの表示に戻る。測るのは頭から鏡の面まで")]
         [SerializeField] private float offDistance = 5f;
-        [Tooltip("鏡が点いていない時に、プローブの映り込みを出す。外すと透明になる(インタラクトはそのまま効く)")]
+        [Tooltip("鏡が点いていない時に、普段の見た目(普段の材質。空ならプローブの映り込み)を出す。外すと透明になる(インタラクトはそのまま効く)")]
         [SerializeField] private bool showProbe = true;
+        [Tooltip("鏡が点いていない時の見た目の材質(硝子など)。空ならプローブの映り込み。材質に _Mask があればマスクも効く")]
+        [SerializeField] private Material idleMaterial;
         [Tooltip("鏡の形。白=鏡・黒か透明=抜け。空なら四角")]
         [SerializeField] private Texture mask;
         [Tooltip("プレイヤーオンリーの背景の画像。鏡いっぱいに、縦横比を保って敷く")]
@@ -104,6 +106,7 @@ namespace com.osakishokai.vpm.lightmirror.us
         {
             if (prepared) return;
             prepared = true;
+            if (idleMaterial != null && probeSurface != null) probeSurface.sharedMaterial = idleMaterial;
             SetMask(probeSurface);
             if (fullMirror != null) SetMask(fullMirror.GetComponent<Renderer>());
             if (playerMirror != null)

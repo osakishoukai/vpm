@@ -20,7 +20,11 @@ namespace com.osakishokai.vpm.lightmirror.editor
             var mode = serializedObject.FindProperty("mode");
             mode.intValue = EditorGUILayout.Popup("モード", mode.intValue, ModeNames);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("offDistance"), new GUIContent("離れたら戻す距離(m)"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("showProbe"), new GUIContent("普段の映り込みを出す", "鏡が点いていない時に、周りの景色(リフレクションプローブ)を映す。外すと透明になる(インタラクトはそのまま効く)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("showProbe"), new GUIContent("普段の見た目を出す", "鏡が点いていない時に、普段の材質(空なら周りの景色=リフレクションプローブの映り込み)を出す。外すと透明になる(インタラクトはそのまま効く)"));
+            var idle = serializedObject.FindProperty("idleMaterial");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(idle, new GUIContent("普段の材質", "鏡が点いていない時の見た目(OsakiGlass_Standard などの硝子)。空ならプローブの映り込み。インタラクトで鏡に替わる"));
+            bool idleChanged = EditorGUI.EndChangeCheck();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("mask"), new GUIContent("マスク(白=鏡)"));
 
             if (mode.intValue == OsakiLightMirror.ModePlayerOnly)
@@ -44,7 +48,31 @@ namespace com.osakishokai.vpm.lightmirror.editor
                     EditorGUILayout.PropertyField(serializedObject.FindProperty(n));
                 EditorGUI.indentLevel--;
             }
-            if (serializedObject.ApplyModifiedProperties()) OsakiLightMirrorMaskPreview.Refresh((OsakiLightMirror)target);
+            if (serializedObject.ApplyModifiedProperties())
+            {
+                if (idleChanged) SyncIdleMaterial();
+                OsakiLightMirrorMaskPreview.Refresh((OsakiLightMirror)target);
+            }
+        }
+
+        // 普段の材質を、エディタでも見えるように中身の Probe へ写す(実行時は U# が同じことをする)。空に戻したら prefab の材質へ戻す
+        void SyncIdleMaterial()
+        {
+            var so = new SerializedObject(target);
+            var r = so.FindProperty("probeSurface").objectReferenceValue as Renderer;
+            if (r == null) return;
+            var m = so.FindProperty("idleMaterial").objectReferenceValue as Material;
+            if (m != null)
+            {
+                Undo.RecordObject(r, "LightMirror 普段の材質");
+                r.sharedMaterial = m;
+                PrefabUtility.RecordPrefabInstancePropertyModifications(r);
+                return;
+            }
+            if (!PrefabUtility.IsPartOfPrefabInstance(r)) return;
+            var rso = new SerializedObject(r);
+            var mats = rso.FindProperty("m_Materials");
+            if (mats != null && mats.prefabOverride) PrefabUtility.RevertPropertyOverride(mats, InteractionMode.UserAction);
         }
     }
 }
