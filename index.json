@@ -271,6 +271,23 @@
           },
           "url": "https://github.com/osakishoukai/vpm/releases/download/bgmbox-1.0.0/com.osakishokai.vpm.bgmbox-1.0.0.zip",
           "zipSHA256": "e380f26c296fc28eb9cb06b821f756499a8991fc0e0c4e0a08d9d1dd83459d8a"
+        },
+        "1.1.0": {
+          "name": "com.osakishokai.vpm.bgmbox",
+          "displayName": "Osaki BgmBox",
+          "version": "1.1.0",
+          "unity": "2022.3",
+          "description": "持って運べる BGM の箱(U#)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/bgmbox-1.1.0/com.osakishokai.vpm.bgmbox-1.1.0.zip",
+          "zipSHA256": "e432dee18d55fb193a082a4f32efe6f5183bc662d16e80e0aff5f12e6cf58306"
         }
       }
     },

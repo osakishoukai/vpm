@@ -10,6 +10,7 @@
 //   近域: 1〜16mでなだらかに減衰(立体音響) / 全域: 距離に関係なくワールド全体で同じ大きさ(2D) / OFF: 一時停止
 // 同期: 持った人が Owner(VRCObjectSync)。Owner が次の状態を決めて全員へ送り、途中参加者には Owner が数秒後に送り直す
 // 切り替えたら箱の上に2秒だけ文字で出す(TextMeshPro。日本語は VRChat 内蔵の Noto へフォールバックするので容量は増えない)。
+// 入室した時の状態は 近域。startOff を立てると OFF から始まる(同じワールドで LightPlayer など別の曲が鳴る時。1.1.0)。
 // 鳴っている間だけ音符が昇る。曲の大きさがそろっていない時は AudioSource の Volume で合わせる(既定 0.2 は -11.6 LUFS の曲で決めた値)。
 using TMPro;
 using UdonSharp;
@@ -34,8 +35,11 @@ namespace com.osakishokai.vpm.bgmbox
         [SerializeField] private string worldText = "♪ 全域";
         [SerializeField] private string offText = "OFF";
         [SerializeField] private float labelSeconds = 2f;
+        [Tooltip("入室した時は止めておく(OFF から始める)。同じワールドで LightPlayer など別の曲が鳴る時に")]
+        [SerializeField] private bool startOff;
 
         private int mode = Near;
+        private bool gotMode;   // Start より前に Owner の状態が届いた(startOff で上書きしない)
         private int labelSerial;
 
         private VRC_Pickup pickup;
@@ -45,6 +49,7 @@ namespace com.osakishokai.vpm.bgmbox
         void Start()
         {
             if (labelObject != null) labelObject.SetActive(false);
+            if (startOff && !gotMode) mode = Off;
             Apply(false);
             SetupLocalHold();
         }
@@ -86,6 +91,7 @@ namespace com.osakishokai.vpm.bgmbox
         public void SetMode(int m, bool show)
         {
             if (m < Near || m > Off) return;
+            gotMode = true;
             if (m == mode && !show) return;
             mode = m;
             Apply(show);
