@@ -26,6 +26,8 @@ namespace com.osakishokai.vpm.lightmirror.editor
             EditorGUILayout.PropertyField(idle, new GUIContent("普段の材質", "鏡が点いていない時の見た目(OsakiGlass_Standard などの硝子)。空ならプローブの映り込み。インタラクトで鏡に替わる"));
             bool idleChanged = EditorGUI.EndChangeCheck();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("mask"), new GUIContent("マスク(白=鏡)"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("seSource"), new GUIContent("点ける音の AudioSource", "押して点けた時に鳴らす。空なら鳴らない"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("seOn"), new GUIContent("点ける音"));
 
             if (mode.intValue == OsakiLightMirror.ModePlayerOnly)
             {

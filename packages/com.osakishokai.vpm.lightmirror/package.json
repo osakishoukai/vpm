@@ -1,7 +1,7 @@
 {
   "name": "com.osakishokai.vpm.lightmirror",
   "displayName": "LightMirror",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "unity": "2022.3",
   "description": "軽い鏡(U#・シェーダー)",
   "license": "MIT",
@@ -17,5 +17,5 @@
     "Assets/Osaki/LightMirror/res/script/us": "638a9bfc2c894b0dbe9c521e0d73aa1b",
     "Assets/Osaki/LightMirror/res/script/editor": "e0bd54b42631db5489195566b443c41f"
   },
-  "url": "https://github.com/osakishoukai/vpm/releases/download/lightmirror-1.1.0/com.osakishokai.vpm.lightmirror-1.1.0.zip"
+  "url": "https://github.com/osakishoukai/vpm/releases/download/lightmirror-1.2.0/com.osakishokai.vpm.lightmirror-1.2.0.zip"
 }

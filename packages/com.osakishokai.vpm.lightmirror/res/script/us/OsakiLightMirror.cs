@@ -28,6 +28,10 @@ namespace com.osakishokai.vpm.lightmirror.us
         [SerializeField] private int cameraResolution = 1024;
         [Tooltip("カメラミラーで写す物のレイヤー。人だけにすると軽い")]
         [SerializeField] private LayerMask cameraLayers = ~((1 << 5) | (1 << 10) | (1 << 12) | (1 << 19) | (1 << 20));
+        [Tooltip("鏡を押して点けた時に鳴らす AudioSource。空なら鳴らない。外のスクリプトから TurnOn/TurnOff した時は鳴らない(呼んだ側が鳴らす)")]
+        [SerializeField] private AudioSource seSource;
+        [Tooltip("点けた時の音。空なら seSource の clip")]
+        [SerializeField] private AudioClip seOn;
 
         [Header("中身(prefab のまま触らない)")]
         [SerializeField] private Renderer probeSurface;
@@ -47,7 +51,14 @@ namespace com.osakishokai.vpm.lightmirror.us
             Apply();
         }
 
-        public override void Interact() { TurnOn(); }
+        public override void Interact()
+        {
+            if (isOn) return;
+            TurnOn();
+            if (seSource == null) return;
+            if (seOn != null) seSource.PlayOneShot(seOn);
+            else seSource.Play();
+        }
 
         public void TurnOn()
         {
