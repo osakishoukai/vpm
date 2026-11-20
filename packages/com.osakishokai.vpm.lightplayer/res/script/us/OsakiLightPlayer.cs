@@ -115,6 +115,9 @@ namespace com.osakishokai.vpm.lightplayer.us
 
         private bool liveBound;
 
+        private float duckFactor = 1f;
+        private float duckUntil;
+
         private bool ready;
 
         void Start() { Init(); }
@@ -328,6 +331,31 @@ namespace com.osakishokai.vpm.lightplayer.us
             ApplyVolume();
         }
 
+        public void _Duck(float level, float seconds)
+        {
+            Init();
+            if (leader != this) { if (leader != null) leader._Duck(level, seconds); return; }
+            if (float.IsNaN(level) || float.IsInfinity(level) || float.IsNaN(seconds) || float.IsInfinity(seconds)) return;
+            if (seconds <= 0f) return;
+            level = Mathf.Clamp01(level);
+            float now = Time.time;
+            if (now >= duckUntil) duckFactor = level;
+            else duckFactor = Mathf.Min(duckFactor, level);
+            float until = now + seconds;
+            if (until > duckUntil) duckUntil = until;
+            ApplyBgm();
+            SendCustomEventDelayedSeconds(nameof(_DuckCheck), seconds + 0.05f);
+        }
+
+        public void _DuckCheck()
+        {
+            if (leader != this) return;
+            if (Time.time < duckUntil) return;
+            if (duckFactor >= 1f) return;
+            duckFactor = 1f;
+            ApplyBgm();
+        }
+
         public void _ApplyBgm()
         {
             Init();
@@ -347,7 +375,10 @@ namespace com.osakishokai.vpm.lightplayer.us
                 if (m._ShowsVideo()) anyVideo = true;
                 maxVol = Mathf.Max(maxVol, m._Volume());
             }
-            bgm.volume = BgmVolume(anyVideo, maxVol, bgmLevel);
+            float duck = 1f;
+            if (Time.time < duckUntil) duck = duckFactor;
+            else duckFactor = 1f;
+            bgm.volume = BgmVolume(anyVideo, maxVol, bgmLevel) * duck;
         }
 
         [NetworkCallable(4)]
@@ -859,6 +890,7 @@ namespace com.osakishokai.vpm.lightplayer.us
         public float TestOnly_BasePos() { return basePos; }
 
         public float TestOnly_BgmVolume() { Init(); if (leader != this) return leader.TestOnly_BgmVolume(); return bgm != null ? bgm.volume : -1f; }
+        public float TestOnly_DuckFactor() { Init(); if (leader != this) return leader.TestOnly_DuckFactor(); return Time.time < duckUntil ? duckFactor : 1f; }
         public bool TestOnly_IsBgmLeader() { Init(); return leader == this; }
         public bool TestOnly_LiveOn() { return liveCam != null && liveWant; }
 

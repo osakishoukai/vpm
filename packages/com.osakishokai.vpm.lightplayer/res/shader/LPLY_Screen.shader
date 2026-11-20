@@ -27,6 +27,7 @@ Shader "Osaki/VPM/LightPlayer/Screen"
         Tags { "RenderType" = "Opaque" "Queue" = "Geometry" }
         Pass
         {
+            Offset -1, -1
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333ccfdd0cbdbc4ca30cef2dd6e6b9b, type: 3}
   m_Name: LightPlayerLogger
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: e5eb6f6131392664e9258ee414f45885,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: 7105530373f61424ca654a3df597ab94,
     type: 2}
   udonAssembly: 
   assemblyError: 
@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 1
   hasInteractEvent: 0
-  scriptID: 9130569652235860432
+  scriptID: 3850730017080614491
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
