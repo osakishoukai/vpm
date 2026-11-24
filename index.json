@@ -441,6 +441,27 @@
           "zipSHA256": "0e00adf60d19bb0f1c3da899187dcd9aa4ea3d35186db0a7c4e9066ccbf22bb7"
         }
       }
+    },
+    "com.osakishokai.vpm.clock": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.clock",
+          "displayName": "Osaki Clock",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "時計の針を今の時刻に合わせる(U#)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/clock-1.0.0/com.osakishokai.vpm.clock-1.0.0.zip",
+          "zipSHA256": "b84f020acdf7eb861dd9b7f468073047836f643809ec4ae6bcb4e25beae45c6d"
+        }
+      }
     }
   }
 }
