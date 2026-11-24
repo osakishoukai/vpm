@@ -170,7 +170,10 @@ Shader "Osaki/VPM/Glass"
                 half3 worldViewUp = normalize(half3(0, 1, 0) - v * v.y);
                 half3 worldViewRight = normalize(cross(v, worldViewUp));
                 half2 mcUV = half2(dot(worldViewRight, n), dot(worldViewUp, n)) * 0.5h + 0.5h;
-                half3 matcap = tex2D(_MatCap, mcUV).rgb * _MatCapStrength;
+                // MatCap は丸いガラス(コップ・瓶)の照り。平らな板(窓・戸)では面の向きが一様で一面の膜になるので、
+                // 曲がり具合(法線の変わり方 ÷ 位置の変わり方 = 1/半径)で弱める。半径 1m 以下の曲面は今のまま、平らな面は 0(1.3.0)
+                half curv = saturate(length(fwidth(i.worldNormal)) / max(length(fwidth(i.worldPos)), 1e-5));
+                half3 matcap = tex2D(_MatCap, mcUV).rgb * _MatCapStrength * curv;
 
                 // すりの白い膜: 表と裏の両方の光で光る
                 half3 veilCol = (amb + ambBack) * 0.5h * lerp(half3(1, 1, 1), _Color.rgb, _Color.a);
