@@ -544,6 +544,27 @@
           "zipSHA256": "b84f020acdf7eb861dd9b7f468073047836f643809ec4ae6bcb4e25beae45c6d"
         }
       }
+    },
+    "com.osakishokai.vpm.porcelain": {
+      "versions": {
+        "1.0.0": {
+          "name": "com.osakishokai.vpm.porcelain",
+          "displayName": "Osaki Porcelain",
+          "version": "1.0.0",
+          "unity": "2022.3",
+          "description": "陶器・磁器のシェーダー(見る向きに付く照り返し。焼いた光も受ける)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/porcelain-1.0.0/com.osakishokai.vpm.porcelain-1.0.0.zip",
+          "zipSHA256": "a31e3beb0523d50e072d6be46f7d5536137446e310d1df1bbf3fd1bd98f9dc15"
+        }
+      }
     }
   }
 }
