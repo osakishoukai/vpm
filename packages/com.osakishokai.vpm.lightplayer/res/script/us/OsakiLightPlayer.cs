@@ -40,6 +40,8 @@ namespace com.osakishokai.vpm.lightplayer.us
         [SerializeField] private BaseVRCVideoPlayer unityPlayer;
         [Tooltip("AVPro の音(VRCAVProVideoSpeaker を付けた AudioSource)")]
         [SerializeField] private AudioSource avproSpeaker;
+        [Tooltip("AVPro で 1ch 音声を両耳に出す予備スピーカー(VRCAVProVideoSpeaker mode=MonoLeft。空でも可)")]
+        [SerializeField] private AudioSource avproSpeakerMono;
         [Tooltip("Unity の再生機の音(targetAudioSources に入れた AudioSource)")]
         [SerializeField] private AudioSource unitySpeaker;
 
@@ -117,6 +119,12 @@ namespace com.osakishokai.vpm.lightplayer.us
 
         private float duckFactor = 1f;
         private float duckUntil;
+
+        private float[] avproProbeBuf;
+        private bool avproUseMono;
+        private bool avproStereoSeen;
+        private int avproMonoHits;
+        private float nextAvproAudioCheck;
 
         private bool ready;
 
@@ -220,7 +228,7 @@ namespace com.osakishokai.vpm.lightplayer.us
             return retryCount < MaxErrorRetry ? ActRetry : ActNextStage;
         }
 
-        public static int NextStage(int s) { return s == StageAvpro ? StageUnity : StageIdle; }
+        public static int NextStage(int s) { return s == StageUnity ? StageAvpro : StageIdle; }
 
         public static int ScreenMode(int s, bool isLoaded)
         {
@@ -580,12 +588,8 @@ namespace com.osakishokai.vpm.lightplayer.us
 
         private int FirstStage()
         {
-#if UNITY_EDITOR
-
             if (unityPlayer != null) return StageUnity;
-#endif
             if (avproPlayer != null) return StageAvpro;
-            if (unityPlayer != null) return StageUnity;
             return StageIdle;
         }
 
@@ -612,6 +616,7 @@ namespace com.osakishokai.vpm.lightplayer.us
             duration = 0f;
             avproTexSeen = null;
             unityTexSeen = null;
+            ResetAvproAudioMode();
             StopPlayers();
             ApplyAll();
             if (loadQueued) return;
@@ -681,6 +686,7 @@ namespace com.osakishokai.vpm.lightplayer.us
             duration = 0f;
             failedUrl = _HasUrl() ? url.Get() : "";
             failShowUntil = Time.time + FailShowSeconds;
+            ResetAvproAudioMode();
             StopPlayers();
             ApplyAll();
 
@@ -699,6 +705,7 @@ namespace com.osakishokai.vpm.lightplayer.us
             retry = 0;
             failedUrl = "";
             failShowUntil = 0f;
+            ResetAvproAudioMode();
             StopPlayers();
             ApplyAll();
         }
@@ -762,10 +769,67 @@ namespace com.osakishokai.vpm.lightplayer.us
 
         private void ApplyVolume()
         {
-            if (avproSpeaker != null) avproSpeaker.volume = userVolume;
+            if (avproSpeakerMono != null && avproUseMono)
+            {
+                if (avproSpeaker != null) avproSpeaker.volume = userVolume > 0.001f ? 0.0005f : 0f;
+                avproSpeakerMono.volume = userVolume;
+            }
+            else
+            {
+                if (avproSpeaker != null) avproSpeaker.volume = userVolume;
+                if (avproSpeakerMono != null) avproSpeakerMono.volume = 0f;
+            }
             if (unitySpeaker != null) unitySpeaker.volume = userVolume;
             if (leader == this) ApplyBgm();
             else if (leader != null) leader._ApplyBgm();
+        }
+
+        private void ResetAvproAudioMode()
+        {
+            avproUseMono = false;
+            avproStereoSeen = false;
+            avproMonoHits = 0;
+            nextAvproAudioCheck = 0f;
+        }
+
+        private void CheckAvproMono()
+        {
+            if (avproProbeBuf == null) avproProbeBuf = new float[256];
+            avproSpeaker.GetOutputData(avproProbeBuf, 0);
+            float peakL = 0f;
+            for (int i = 0; i < avproProbeBuf.Length; i++)
+            {
+                float a = Mathf.Abs(avproProbeBuf[i]);
+                if (a > peakL) peakL = a;
+            }
+            avproSpeaker.GetOutputData(avproProbeBuf, 1);
+            float peakR = 0f;
+            for (int i = 0; i < avproProbeBuf.Length; i++)
+            {
+                float a = Mathf.Abs(avproProbeBuf[i]);
+                if (a > peakR) peakR = a;
+            }
+            if (peakR > 1e-7f)
+            {
+                avproStereoSeen = true;
+                if (avproUseMono)
+                {
+                    avproUseMono = false;
+                    ApplyVolume();
+                    if (logger != null) logger.Log("avpro stereo -> StereoMix");
+                }
+                return;
+            }
+            if (!avproUseMono && peakL > 1e-5f)
+            {
+                avproMonoHits++;
+                if (avproMonoHits >= 2)
+                {
+                    avproUseMono = true;
+                    ApplyVolume();
+                    if (logger != null) logger.Log("avpro 1ch -> MonoLeft");
+                }
+            }
         }
 
         private void ApplyScreen()
@@ -835,6 +899,11 @@ namespace com.osakishokai.vpm.lightplayer.us
             if (!loaded) return;
             if (stage == StageAvpro && avproSource != null) CopyAvproTexture();
             if (stage == StageUnity && unitySource != null) CopyUnityTexture();
+            if (stage == StageAvpro && playing && !avproStereoSeen && avproSpeaker != null && avproSpeakerMono != null && userVolume > 0.001f && Time.time >= nextAvproAudioCheck)
+            {
+                nextAvproAudioCheck = Time.time + 0.25f;
+                CheckAvproMono();
+            }
             if (!playing || Time.time < nextDrift) return;
             nextDrift = Time.time + DriftInterval;
             if (!HasFiniteDuration(duration)) return;
@@ -893,6 +962,7 @@ namespace com.osakishokai.vpm.lightplayer.us
         public float TestOnly_DuckFactor() { Init(); if (leader != this) return leader.TestOnly_DuckFactor(); return Time.time < duckUntil ? duckFactor : 1f; }
         public bool TestOnly_IsBgmLeader() { Init(); return leader == this; }
         public bool TestOnly_LiveOn() { return liveCam != null && liveWant; }
+        public bool TestOnly_AvproUseMono() { return avproUseMono; }
 
         public float TestOnly_PlayerTime() { BaseVRCVideoPlayer p = Active(); return p != null && loaded ? p.GetTime() : -1f; }
         public void TestOnly_SetDuration(float d) { duration = d; }
