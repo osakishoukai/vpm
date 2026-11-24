@@ -74,6 +74,29 @@
           },
           "url": "https://github.com/osakishoukai/vpm/releases/download/lightplayer-1.2.0/com.osakishokai.vpm.lightplayer-1.2.0.zip",
           "zipSHA256": "f5bcace65e41460f60ab320a20c50eb1d70c68f898e7178eb49402cedcc99b1d"
+        },
+        "1.2.1": {
+          "name": "com.osakishokai.vpm.lightplayer",
+          "displayName": "LightPlayer",
+          "version": "1.2.1",
+          "unity": "2022.3",
+          "description": "動画プレイヤー(U#・シェーダー)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "legacyFolders": {
+            "Assets/Osaki/LightPlayer/res/shader": "7957b92676282c84ebf4e37ad6b9c52f",
+            "Assets/Osaki/LightPlayer/res/Serialized": "3135de9f07c495e4998a0178989e37af",
+            "Assets/Osaki/LightPlayer/res/script/editor": "c0781860bb2c5164392866c02817ac7e",
+            "Assets/Osaki/LightPlayer/res/script/us": "225f31ed468b4524ac399974087aad97"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/lightplayer-1.2.1/com.osakishokai.vpm.lightplayer-1.2.1.zip",
+          "zipSHA256": "ae61765360acd905ee2177743d86669e9488f54741eab5f5f6a9c61e7eeab68c"
         }
       }
     },
