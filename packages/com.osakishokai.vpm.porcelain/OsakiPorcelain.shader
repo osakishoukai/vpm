@@ -75,7 +75,11 @@ Shader "Osaki/VPM/Porcelain"
             #endif
                 float3 albedo = _Color.rgb * tex2D(_MainTex, i.uv).rgb;
                 float metal = tex2D(_MetalMask, i.uv).r;
-                float3 diffuse = albedo * max(light, _MinLight.xxx) * (1 - 0.7 * metal);
+                // 底上げは明るさで(色ごとの max だと暖色の光で緑・青だけ持ち上がり色が転ぶ。kaizen #1725)。真っ暗な所は灰色で上げる
+                float lum = dot(light, float3(0.2126, 0.7152, 0.0722));
+                float3 lifted = lerp(_MinLight.xxx, light * (_MinLight / max(lum, 1e-4)), saturate(lum * 20));
+                light = lum < _MinLight ? lifted : light;
+                float3 diffuse = albedo * light * (1 - 0.7 * metal);
 
                 float3 h = normalize(ld + vdir);
                 float spec = pow(saturate(dot(n, h)), _Gloss) * 1.5;
