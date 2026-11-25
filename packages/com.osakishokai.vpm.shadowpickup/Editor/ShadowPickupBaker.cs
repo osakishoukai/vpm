@@ -229,6 +229,7 @@ namespace com.osakishokai.vpm.shadowpickup.editor
             public string guid;
             public GameObject prefab;
             public GameObject realPrefab;
+            public float returnDelay = ShadowPickupPool.ReturnDelay;
             public List<SourceInstance> sources = new List<SourceInstance>();
             public List<RenderPart> parts = new List<RenderPart>();
             public Vector3 desktopLocalBoundsCenter;
@@ -365,6 +366,11 @@ namespace com.osakishokai.vpm.shadowpickup.editor
                                 realInst.transform.localRotation = s.marker.transform.localRotation;
                                 realInst.transform.localScale = s.marker.transform.localScale;
                                 realInst.name = s.marker.gameObject.name;
+                                // Same reason as in BuildVirtualizedGroup: Play-mode InstantiatePrefab
+                                // leaves the prefab's UdonBehaviours uninitialised.
+                                if (mode == ShadowPickupBakeMode.Play)
+                                    foreach (UdonBehaviour behaviour in realInst.GetComponentsInChildren<UdonBehaviour>(true))
+                                        behaviour.InitializeUdonContent();
                                 virtualizedSourcesToDestroy.Add(s.marker.gameObject);
                             }
                         }
@@ -510,7 +516,8 @@ namespace com.osakishokai.vpm.shadowpickup.editor
                         prefabPath = !string.IsNullOrEmpty(realPrefabPath) ? realPrefabPath : path,
                         guid = !string.IsNullOrEmpty(realPrefabPath) ? AssetDatabase.AssetPathToGUID(realPrefabPath) : AssetDatabase.AssetPathToGUID(path),
                         prefab = prefab,
-                        realPrefab = realPrefab
+                        realPrefab = realPrefab,
+                        returnDelay = rootMarker != null ? rootMarker.returnDelay : ShadowPickupPool.ReturnDelay
                     };
                     byGroupKey.Add(groupKey, group);
                 }
@@ -684,7 +691,7 @@ namespace com.osakishokai.vpm.shadowpickup.editor
             for (int i = 0; i < slots.Length; i++)
             {
                 Vector3 poolPosition = poolBase + new Vector3((i % 4) * SlotSpacing, 0f, (i / 4) * SlotSpacing);
-                slots[i] = CreateRealSlot(scene, groupRoot.transform, group.realPrefab != null ? group.realPrefab : group.prefab, pool, i, poolPosition);
+                slots[i] = CreateRealSlot(scene, groupRoot.transform, group.realPrefab != null ? group.realPrefab : group.prefab, pool, i, poolPosition, group.returnDelay);
             }
             pool.slots = slots;
 
@@ -722,7 +729,7 @@ namespace com.osakishokai.vpm.shadowpickup.editor
             groupRoot.SetActive(true);
         }
 
-        private static ShadowPickupSlot CreateRealSlot(Scene scene, Transform parent, GameObject prefab, ShadowPickupPool pool, int slotIndex, Vector3 poolPosition)
+        private static ShadowPickupSlot CreateRealSlot(Scene scene, Transform parent, GameObject prefab, ShadowPickupPool pool, int slotIndex, Vector3 poolPosition, float returnDelay)
         {
             GameObject go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
             if (go == null) throw new BuildFailedException("Failed to instantiate ShadowPickup real prefab: " + AssetDatabase.GetAssetPath(prefab));
@@ -783,6 +790,7 @@ namespace com.osakishokai.vpm.shadowpickup.editor
             slot.poolPosition = poolPosition;
             slot.poolRotation = Quaternion.identity;
             slot.poolScale = go.transform.localScale;
+            slot.returnDelay = returnDelay;
 
             UdonSharpEditorUtility.CopyProxyToUdon(slot);
             go.SetActive(true);
@@ -1009,6 +1017,7 @@ namespace com.osakishokai.vpm.shadowpickup.editor
             serializedObject.Update();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("realPrefab"), new GUIContent("Real Prefab", "Dedicated real pickup prefab instantiated for pool slots. If empty, this prefab itself is used as the real slot."));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("variantID"), new GUIContent("Variant ID", "Variant / flavor ID (0..15) used for 4x4 atlas rendering."));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("returnDelay"), new GUIContent("Return Delay", "Seconds after a drop until the real pickup returns to its shadow (per group; the authoring prefab root's value is used)."));
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.Space();

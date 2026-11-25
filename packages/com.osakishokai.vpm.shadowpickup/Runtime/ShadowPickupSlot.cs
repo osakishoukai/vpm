@@ -40,6 +40,8 @@ namespace com.osakishokai.vpm.shadowpickup
         public Vector3 poolPosition;
         public Quaternion poolRotation = Quaternion.identity;
         public Vector3 poolScale = Vector3.one;
+        // Seconds after a drop until the slot returns to its shadow. Baked from ShadowPickup.returnDelay of the group.
+        public float returnDelay = ShadowPickupPool.ReturnDelay;
 
         // Read by the pool every frame to decide whether this slot needs a per-frame tick (localIndex >= 0) or only the idle scan.
         // A public field read is far cheaper than a cross-behaviour call; all writes stay in this class.
@@ -340,7 +342,7 @@ namespace com.osakishokai.vpm.shadowpickup
                 // Only the physical ObjectSync owner performs the five-second
                 // automatic return. Everyone else simply observes ObjectSync.
                 if (!Networking.IsOwner(gameObject) || returnRequested || droppedAt < 0f) return;
-                if (Time.time - droppedAt >= ShadowPickupPool.ReturnDelay) BeginReturn();
+                if (Time.time - droppedAt >= returnDelay) BeginReturn();
                 return;
             }
 

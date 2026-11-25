@@ -25,7 +25,7 @@ namespace com.osakishokai.vpm.shadowpickup
         public const int EmptyIndex = 1023; // 10-bit sentinel; valid logical indices are 0..1022.
         public const float ActivationDistance = 0.15f;
         public const float ReleaseDistance = 0.25f;
-        public const float ReturnDelay = 5.0f;
+        public const float ReturnDelay = 5.0f; // default of ShadowPickup.returnDelay (per group)
         public const float DesktopProximity = 2.0f;
         public const float DesktopRayDistance = 2.0f;
         public const float ReturnRegionRadius = 5.0f;

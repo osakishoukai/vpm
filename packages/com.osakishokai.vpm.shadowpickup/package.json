@@ -1,7 +1,7 @@
 {
   "name": "com.osakishokai.vpm.shadowpickup",
   "displayName": "Osaki ShadowPickup",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "unity": "2022.3",
   "description": "影付きの持てる物(U#・エディタ拡張)",
   "license": "MIT",
@@ -13,5 +13,5 @@
     "com.vrchat.worlds": ">=3.10.6",
     "com.osakishokai.vpm.build": "^1.0.0"
   },
-  "url": "https://github.com/osakishoukai/vpm/releases/download/shadowpickup-1.0.0/com.osakishokai.vpm.shadowpickup-1.0.0.zip"
+  "url": "https://github.com/osakishoukai/vpm/releases/download/shadowpickup-1.1.1/com.osakishokai.vpm.shadowpickup-1.1.1.zip"
 }

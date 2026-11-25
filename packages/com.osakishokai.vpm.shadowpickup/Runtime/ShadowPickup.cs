@@ -8,8 +8,7 @@ namespace com.osakishokai.vpm.shadowpickup
     /// The editor baker replaces large groups of identical prefab instances with
     /// GPU-instanced shadows plus a small pool of real pickup instances.
     ///
-    /// This component is intentionally configuration-free. Runtime constants live
-    /// in ShadowPickupPool.
+    /// Other runtime constants live in ShadowPickupPool.
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("ShadowPickup/Shadow Pickup")]
@@ -21,6 +20,10 @@ namespace com.osakishokai.vpm.shadowpickup
         [Tooltip("Variant / flavor ID (0..15) used for 4x4 atlas rendering and payload visual selection.")]
         [Range(0, 15)]
         public byte variantID = 0;
+
+        [Tooltip("Seconds after a drop until the real pickup returns to its shadow. One value per group (realPrefab): the authoring prefab root's value is used.")]
+        [Min(0f)]
+        public float returnDelay = ShadowPickupPool.ReturnDelay;
 
 #if UNITY_EDITOR
         private void OnValidate()
