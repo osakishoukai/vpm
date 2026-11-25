@@ -73,8 +73,6 @@ namespace com.osakishokai.vpm.shadowpickup
         private bool nearBoundsValid;
         private Vector3 nearMin;
         private Vector3 nearMax;
-        private Vector3 boundsCenter;
-        private float boundsRadius;
 
         private void BuildNearBounds()
         {
@@ -102,8 +100,6 @@ namespace com.osakishokai.vpm.shadowpickup
             }
             nearMin = new Vector3(loX - 0.05f, loY - 0.05f, loZ - 0.05f);
             nearMax = new Vector3(hiX + 0.05f, hiY + 0.05f, hiZ + 0.05f);
-            boundsCenter = (nearMin + nearMax) * 0.5f;
-            boundsRadius = (nearMax - nearMin).magnitude * 0.5f;
             nearBoundsValid = true;
         }
 
@@ -610,14 +606,6 @@ namespace com.osakishokai.vpm.shadowpickup
         private void LateUpdate()
         {
             if (drawBatches == null || meshes == null || materials == null) return;
-
-            if (nearBoundsValid && Utilities.IsValid(Networking.LocalPlayer))
-            {
-                VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
-                Vector3 forward = head.rotation * Vector3.forward;
-                Vector3 toCenter = boundsCenter - head.position;
-                if (Vector3.Dot(forward, toCenter) < -boundsRadius) return;
-            }
 
             for (int d = 0; d < drawBatches.Length; d++)
             {

@@ -470,6 +470,24 @@
           },
           "url": "https://github.com/osakishoukai/vpm/releases/download/shadowpickup-1.1.1/com.osakishokai.vpm.shadowpickup-1.1.1.zip",
           "zipSHA256": "1bf24b00c4fc006e83be3052dbcfcb32d48bf1f3d8fd13f940c0c68027aa86a8"
+        },
+        "1.1.2": {
+          "name": "com.osakishokai.vpm.shadowpickup",
+          "displayName": "Osaki ShadowPickup",
+          "version": "1.1.2",
+          "unity": "2022.3",
+          "description": "影付きの持てる物(U#・エディタ拡張)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6",
+            "com.osakishokai.vpm.build": "^1.0.0"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/shadowpickup-1.1.2/com.osakishokai.vpm.shadowpickup-1.1.2.zip",
+          "zipSHA256": "2c6bd8d2316b045efbdd69b64d3a87e0926ae79a7af0ca8d6ee722c32c496496"
         }
       }
     },
