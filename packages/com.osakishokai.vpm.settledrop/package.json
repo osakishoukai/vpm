@@ -1,7 +1,7 @@
 {
   "name": "com.osakishokai.vpm.settledrop",
   "displayName": "Osaki SettleDrop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2022.3",
   "description": "置くと落ち着く(U#)",
   "license": "MIT",
@@ -12,5 +12,5 @@
   "vpmDependencies": {
     "com.vrchat.worlds": ">=3.10.6"
   },
-  "url": "https://github.com/osakishoukai/vpm/releases/download/settledrop-1.0.0/com.osakishokai.vpm.settledrop-1.0.0.zip"
+  "url": "https://github.com/osakishoukai/vpm/releases/download/settledrop-1.0.1/com.osakishokai.vpm.settledrop-1.0.1.zip"
 }

@@ -430,6 +430,23 @@
           },
           "url": "https://github.com/osakishoukai/vpm/releases/download/settledrop-1.0.0/com.osakishokai.vpm.settledrop-1.0.0.zip",
           "zipSHA256": "e714929a770e7b943b566dbf8abdb3fe88248fa8f80b7932d398f1a615e573f9"
+        },
+        "1.0.1": {
+          "name": "com.osakishokai.vpm.settledrop",
+          "displayName": "Osaki SettleDrop",
+          "version": "1.0.1",
+          "unity": "2022.3",
+          "description": "置くと落ち着く(U#)",
+          "license": "MIT",
+          "author": {
+            "name": "Osaki Shoukai",
+            "url": "https://osakishoukai.github.io/"
+          },
+          "vpmDependencies": {
+            "com.vrchat.worlds": ">=3.10.6"
+          },
+          "url": "https://github.com/osakishoukai/vpm/releases/download/settledrop-1.0.1/com.osakishokai.vpm.settledrop-1.0.1.zip",
+          "zipSHA256": "abc9d489fecb0826500f7bb8af0ca7490e08cda27ea4ca60f0ddbb1875ffd88d"
         }
       }
     },

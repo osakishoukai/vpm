@@ -25,9 +25,12 @@ namespace com.osakishokai.vpm.settledrop
         void Start()
         {
             // 置かれた姿(立てた姿)の、Transform の位置から見た見た目の底の深さ。pivot が底なら 0
-            Renderer[] rs = GetComponentsInChildren<Renderer>();
+            // 形のある物だけ見る(注ぐ粒の ParticleSystemRenderer は止まっていると bounds が原点の 0 になり、底を世界の y=0 と取り違える)
             float minY = transform.position.y;
-            for (int i = 0; i < rs.Length; i++) if (rs[i] != null && rs[i].enabled) minY = Mathf.Min(minY, rs[i].bounds.min.y);
+            MeshRenderer[] ms = GetComponentsInChildren<MeshRenderer>();
+            for (int i = 0; i < ms.Length; i++) if (ms[i] != null && ms[i].enabled) minY = Mathf.Min(minY, ms[i].bounds.min.y);
+            SkinnedMeshRenderer[] ss = GetComponentsInChildren<SkinnedMeshRenderer>();
+            for (int i = 0; i < ss.Length; i++) if (ss[i] != null && ss[i].enabled) minY = Mathf.Min(minY, ss[i].bounds.min.y);
             bottom = transform.position.y - minY;
         }
 
